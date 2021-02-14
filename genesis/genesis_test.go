@@ -6,7 +6,6 @@ package genesis
 import (
 	"fmt"
 	"io/ioutil"
-	"os"
 	"path"
 	"testing"
 
@@ -307,7 +306,7 @@ func TestGenesis(t *testing.T) {
 
 			var customFile string
 			if len(test.customConfig) > 0 {
-				customFile = path.Join(os.TempDir(), "config.json")
+				customFile = path.Join(t.TempDir(), "config.json")
 				assert.NoError(ioutil.WriteFile(customFile, []byte(test.customConfig), 0600))
 			}
 
