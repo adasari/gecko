@@ -5,6 +5,7 @@ package logging
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/mitchellh/go-homedir"
@@ -25,6 +26,20 @@ type Config struct {
 	LogLevel, DisplayLevel                                                                          Level
 	DisplayHighlight                                                                                Highlight
 	Directory, MsgPrefix                                                                            string
+	FileNamePrefix                                                                                  string
+}
+
+// AddFilePrefix adds the given prefixes to FilePrefix
+func (c *Config) AddFilePrefix(prefix ...string) {
+	if len(prefix) > 0 {
+		prefixStr := strings.Join(prefix, ".")
+		if c.FileNamePrefix == "" {
+			c.FileNamePrefix = prefixStr
+			return
+		}
+
+		c.FileNamePrefix = fmt.Sprintf("%s.%s", c.FileNamePrefix, prefixStr)
+	}
 }
 
 // DefaultConfig ...
